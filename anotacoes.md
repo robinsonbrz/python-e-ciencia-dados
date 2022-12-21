@@ -1,0 +1,1 @@
+print(f'{nome=}') # imprime variável e valor da variavel
