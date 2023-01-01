@@ -21,7 +21,7 @@ def create_files(file_name_list):
         # Open a file for writing and name it with the string
         with open(s + '.py', 'w') as f:
             # Write some content to the file
-            f.write("\n'''" + s + "\n'''" )
+            f.write("'''\n" + s + "\n'''" )
 
 
 def scrape_page():
@@ -50,7 +50,7 @@ def scrape_page():
     li_texts = [li.text for li in li_elements if 'Exercise' in li.text]
     li_texts_final = []
     for text in li_texts:
-        li_texts_final.append(text.replace('Exercise', 'ex').replace(' ','-')
+        li_texts_final.append(text.replace('Exercise ', 'ex').replace(' ','-')
         .replace(':','').replace(',', '').replace('?','').lower())
     return li_texts_final
 
