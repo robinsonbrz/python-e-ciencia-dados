@@ -1,3 +1,8 @@
+'''
+Inputs
+'''
+
+
 age = input("How old are you? ")
 height = input("How tall are you in meters? ")
 weight = input("How do you weigh in Kg? ")

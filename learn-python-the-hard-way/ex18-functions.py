@@ -21,6 +21,7 @@ def print_any_qt_parameters(*args):
         print(f"arg{i} = {arg}")
 
 def print_any_qt_parameters_comprehension(*args):
+    # print with list comprehension
     [print(i, " ", arg) for i, arg in enumerate(args)]
 
 
