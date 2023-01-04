@@ -6,6 +6,7 @@ Tipagem forte significa que o interpretador do Python avalia as expressões (eva
 dinâmica fortemente tipada
 
 
+somente no python 3.8
 print(f'{nome=}') # imprime variável e valor da variavel
 
 
