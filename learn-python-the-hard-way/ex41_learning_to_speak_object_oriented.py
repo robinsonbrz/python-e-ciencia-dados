@@ -1,5 +1,7 @@
 '''
 ex41-learning-to-speak-object-oriented
+oop_test.py
+
 
 python ex41_learning_to_speak_object_oriented.py english
 '''
@@ -50,6 +52,7 @@ def convert(snippet, phrase):
             random.sample(WORDS, param_count)))
 
     for sentence in snippet, phrase:
+        import ipdb; ipdb.set_trace()
         result = sentence[:]
 
         # fake class names
