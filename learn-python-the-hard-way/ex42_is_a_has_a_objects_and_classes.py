@@ -58,14 +58,14 @@ class Halibut(Fish):
 ## rover is-a Dog
 rover = Dog("Rover")
 
-## satan is-a Cat
-satan = Cat("Satan")
+## satano is-a Cat
+satano = Cat("Satano")
 
 ## mary is-a Person
 mary = Person("Mary")
 
 ## mary has-a pet
-mary.pet = satan
+mary.pet = satano
 
 ## frank is-a Employee
 frank = Employee("Frank", 120000)
