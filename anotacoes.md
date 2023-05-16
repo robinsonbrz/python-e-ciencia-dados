@@ -16,3 +16,4 @@ Aula 033
 Imutáveis que vimos: str, int, float, bool
 """
 
+98. Exercício - Gerar o primeiro dígito de um CPF com Python
