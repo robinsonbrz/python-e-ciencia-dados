@@ -35,7 +35,7 @@ for pergunta in perguntas:
         print("Resposta errada  👎 ⭕")
     print("________________________\n\n\n")
 
-print(f"Você acertou {respostas_corretas} questões !")
+print(f"Você acertou {respostas_corretas} questões de {len(perguntas)}!")
 
 # respostas_corretas = 0
 # for numero, i in enumerate(perguntas):
