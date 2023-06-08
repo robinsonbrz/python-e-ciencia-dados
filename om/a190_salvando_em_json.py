@@ -14,15 +14,17 @@ pessoa = {
 }
 
 with open('aula117.json', 'w', encoding='utf8') as arquivo:
+    # reads
     json.dump(
         pessoa,
         arquivo,
-        ensure_ascii=False,
-        indent=2,
+        ensure_ascii=False,  # eliminate scape symbols ascii \u00e1 
+        indent=2,            # indent, formata endentado
     )
+
 
 with open('aula117.json', 'r', encoding='utf8') as arquivo:
     pessoa = json.load(arquivo)
-    # print(pessoa)
+    print(pessoa)
     # print(type(pessoa))
-    print(pessoa['nome'])
+    # print(pessoa['nome'])
