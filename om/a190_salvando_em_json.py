@@ -1,8 +1,8 @@
 import json
 
 pessoa = {
-    'nome': 'Luiz Otávio 2',
-    'sobrenome': 'Miranda',
+    'nome': 'Robinson',
+    'sobrenome': 'Enedino',
     'enderecos': [
         {'rua': 'R1', 'numero': 32},
         {'rua': 'R2', 'numero': 55},
@@ -25,6 +25,6 @@ with open('aula117.json', 'w', encoding='utf8') as arquivo:
 
 with open('aula117.json', 'r', encoding='utf8') as arquivo:
     pessoa = json.load(arquivo)
-    print(pessoa)
+    print(pessoa),
     # print(type(pessoa))
     # print(pessoa['nome'])
