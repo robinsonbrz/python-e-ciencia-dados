@@ -1,0 +1,17 @@
+# Herança simples - Relações entre classes
+
+# Associação - usa, 
+# Agregação - tem, 1 N
+# Composição - É dono de, Excluir a base exclui a subClass
+
+# Herança - É um
+#
+# Herança vs Composição
+#
+# Classe principal (Pessoa)
+#   -> super class, base class, parent class
+# Classes filhas (Cliente)
+#   -> sub class, child class, derived class
+
+
+# Pessoa é do tipo cliente
