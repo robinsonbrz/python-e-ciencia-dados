@@ -1,4 +1,5 @@
 import json
+import logging
 from unittest import TestCase
 
 import pytest
@@ -8,14 +9,15 @@ from django.urls import reverse
 from companies.models import Company
 
 
-@pytest.mark.django_db   # from pytest.django
+@pytest.mark.django_db  # from pytest.django
 class BasicCompanyApiTestCase(TestCase):
     def setUp(self) -> None:
         self.client = Client()
         self.companies_url = reverse("companies-list")
-    
+
     def tearDown(self) -> None:
         pass
+
 
 class TestGetCompanies(BasicCompanyApiTestCase):
     def test_zero_companies_should_return_empty_list(self) -> None:
@@ -33,13 +35,11 @@ class TestGetCompanies(BasicCompanyApiTestCase):
         self.assertEqual(response_content.get("application_link"), "")
         self.assertEqual(response_content.get("notes"), "")
         test_company.delete()
-        
+
     #     # b"" stream of bytes
 
 
-
 class TestPostCompanies(BasicCompanyApiTestCase):
-
     def test_create_company_without_arguments_should_fail(self) -> None:
         response = self.client.post(path=self.companies_url)
         self.assertEqual(response.status_code, 400)
@@ -52,39 +52,69 @@ class TestPostCompanies(BasicCompanyApiTestCase):
         response = self.client.post(path=self.companies_url, data={"name": "amazon"})
         self.assertEqual(response.status_code, 400)
         self.assertEqual(
-            json.loads(response.content), {"name": ["company with this name already exists."]}
+            json.loads(response.content),
+            {"name": ["company with this name already exists."]},
         )
         test_company.delete()
 
     def test_create_company_with_only_name_should_be_default(self) -> None:
-        response = self.client.post(path=self.companies_url, data={"name": "test company name"})
+        response = self.client.post(
+            path=self.companies_url, data={"name": "test company name"}
+        )
         self.assertEqual(response.status_code, 201)
         response_content = json.loads(response.content)
         self.assertEqual(response_content.get("name"), "test company name")
         self.assertEqual(response_content.get("status"), "Hiring")
         self.assertEqual(response_content.get("application_link"), "")
         self.assertEqual(response_content.get("notes"), "")
-    
+
     def test_create_company_with_layoffs_status_should_succeed(self) -> None:
-        response = self.client.post(path=self.companies_url, data={"name": "test company name", "status": "Layoffs"})
+        response = self.client.post(
+            path=self.companies_url,
+            data={"name": "test company name", "status": "Layoffs"},
+        )
         self.assertEqual(response.status_code, 201)
         response_content = json.loads(response.content)
         self.assertEqual(response_content.get("status"), "Layoffs")
 
     def test_create_company_with_wrong_status_should_fail(self) -> None:
-        response = self.client.post(path=self.companies_url, data={"name": "test company name", "status": "WrongStatus"})
+        response = self.client.post(
+            path=self.companies_url,
+            data={"name": "test company name", "status": "WrongStatus"},
+        )
         self.assertEqual(response.status_code, 400)
         response_content = json.loads(response.content)
         self.assertIn("status", response_content)
 
 
-
 def raise_covid19_exception() -> None:
-    raise ValueError('CoronaVirus Exception')
+    raise ValueError("CoronaVirus Exception")
+
 
 def test_raise_covid19_exception_should_pass() -> None:
     with pytest.raises(ValueError) as e:
         raise_covid19_exception()
-    assert 'CoronaVirus Exception' == str(e.value)
+    assert "CoronaVirus Exception" == str(e.value)
 
 
+logger = logging.getLogger("CORONA_LOGS")
+
+
+def function_that_logs_something() -> None:
+    try:
+        raise ValueError("CoronaVirus Exception")
+    except ValueError as e:
+        logger.warning(f"I am logging {str(e)}")
+
+
+def test_logged_warning_level(caplog) -> None:
+    # just warning levels and above
+    function_that_logs_something()
+    assert "I am logging CoronaVirus Exception" in caplog.text
+
+
+def test_logged_info_level(caplog) -> None:
+    # this way we can capture info level logs
+    with caplog.at_level(logging.INFO):
+        logger.info("I am logging info level")
+        assert "I am logging info level" in caplog.text
