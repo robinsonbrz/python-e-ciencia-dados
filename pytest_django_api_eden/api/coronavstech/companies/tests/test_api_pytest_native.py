@@ -2,10 +2,10 @@ import json
 import logging
 
 import pytest
-
 from django.urls import reverse
 
 from companies.models import Company
+
 companies_url = reverse("companies-list")
 # The bellow line substitutes @pytest.mark.djangodb on every function in this file
 pytestmark = pytest.mark.django_db
@@ -30,30 +30,35 @@ def test_one_company_exists_should_return_one_company(client) -> None:
 
     #     # b"" stream of bytes
 
+
 # ----------------------- Test Post Companies -----------------------
+
 
 def test_create_company_without_arguments_should_fail(client) -> None:
     response = client.post(path=companies_url)
     assert response.status_code == 400
     assert json.loads(response.content) == {"name": ["This field is required."]}
 
+
 def test_create_existing_company_should_fail(client) -> None:
     test_company = Company.objects.create(name="amazon")
     response = client.post(path=companies_url, data={"name": "amazon"})
     assert response.status_code == 400
-    assert json.loads(response.content) == {"name": ["company with this name already exists."]}
+    assert json.loads(response.content) == {
+        "name": ["company with this name already exists."]
+    }
     test_company.delete()
 
+
 def test_create_company_with_only_name_should_be_default(client) -> None:
-    response = client.post(
-        path=companies_url, data={"name": "test company name"}
-    )
-    assert response.status_code== 201
+    response = client.post(path=companies_url, data={"name": "test company name"})
+    assert response.status_code == 201
     response_content = json.loads(response.content)
     assert response_content.get("name") == "test company name"
     assert response_content.get("status") == "Hiring"
     assert response_content.get("application_link") == ""
     assert response_content.get("notes") == ""
+
 
 def test_create_company_with_layoffs_status_should_succeed(client) -> None:
     response = client.post(
@@ -64,6 +69,7 @@ def test_create_company_with_layoffs_status_should_succeed(client) -> None:
     response_content = json.loads(response.content)
     assert response_content.get("status") == "Layoffs"
 
+
 def test_create_company_with_wrong_status_should_fail(client) -> None:
     response = client.post(
         path=companies_url,
@@ -71,7 +77,7 @@ def test_create_company_with_wrong_status_should_fail(client) -> None:
     )
     assert response.status_code == 400
     response_content = json.loads(response.content)
-    assert "status" in  str(response_content)
+    assert "status" in str(response_content)
 
 
 def raise_covid19_exception() -> None:
