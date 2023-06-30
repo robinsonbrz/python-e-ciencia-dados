@@ -1,42 +1,44 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User
-
-from .models import Category
 from tag.models import Tag
 
+from .models import Recipe
 
-class TagSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    name = serializers.CharField(max_length=255)
-    slug = serializers.SlugField()
 
-class RecipeSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    title = serializers.CharField(max_length=65)
-    description = serializers.CharField(max_length=165)
-    public = serializers.BooleanField(source='is_published')
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ['id', 'name', 'slug']
+
+
+class RecipeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Recipe
+        fields = [
+            'id', 'title', 'description', 'author',
+            'category', 'tags', 'public', 'preparation',
+            'tag_objects', 'tag_links',
+        ]
+
+    public = serializers.BooleanField(
+        source='is_published',
+        read_only=True,
+    )
     preparation = serializers.SerializerMethodField(
-        method_name='any_method_name'
+        method_name='any_method_name',
+        read_only=True,
     )
-    # related field example, getting id from relation
-    # # category = serializers.PrimaryKeyRelatedField(
-    # #     queryset=Category.objects.all(),
-    # # )
-    # related field example, getting CategoryName from relation
-    category = serializers.StringRelatedField()
-    category_name = serializers.StringRelatedField(
-        source='category',
-    )
-    # author = serializers.PrimaryKeyRelatedField(
-    #     queryset=User.objects.all()
-    # )
-    author = serializers.StringRelatedField()
-    tags = serializers.PrimaryKeyRelatedField(
-        queryset=Tag.objects.all(),
-        many=True
+    category = serializers.StringRelatedField(
+        read_only=True,
     )
     tag_objects = TagSerializer(
-        many=True, source='tags'
+        many=True, source='tags',
+        read_only=True,
+    )
+    tag_links = serializers.HyperlinkedRelatedField(
+        many=True,
+        source='tags',
+        view_name='recipes:recipes_api_v2_tag',
+        read_only=True,
     )
 
     def any_method_name(self, recipe):
