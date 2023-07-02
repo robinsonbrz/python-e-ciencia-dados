@@ -2,7 +2,6 @@ from collections import defaultdict
 
 from attr import attr
 from rest_framework import serializers
-
 from tag.models import Tag
 
 from .models import Recipe
@@ -47,7 +46,6 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     def any_method_name(self, recipe):
         return f'{recipe.preparation_time} {recipe.preparation_time_unit}'
-
 
     def validate(self, attrs):
         super_validate = super().validate(attrs)
