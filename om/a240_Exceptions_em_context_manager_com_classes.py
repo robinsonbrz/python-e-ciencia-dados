@@ -34,7 +34,7 @@ class MyOpen:
         self._arquivo.close()
 
 
-with MyOpen('aula240.txt', 'w') as arquivo:
+with MyOpen('aula240Y.txt', 'w') as arquivo:
     arquivo.write('Linha 1\n')
     arquivo.write('Linha 2\n')
     arquivo.write('Linha 3\n')
