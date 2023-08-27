@@ -15,7 +15,7 @@ import unittest
 
 class TestItaInCountriesList(unittest.TestCase):
 
-    def test_ita_in_list(self):
+    def test_is_country_ita_in_list(self):
         assert is_italy == True
 
 
