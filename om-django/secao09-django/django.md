@@ -77,3 +77,37 @@ def home(request):
         'home/index.html'
     )
 ```
+
+### Uso do Include
+
+Podemos tambem criar trechos html para ser incluidos em outros templates
+Muito util para organizar head, footer, e divs que podem ser reutilizadas
+
+Primeiro criar o arquivo html a ser inserido
+em: base/global/partials/head.html
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+```
+
+Esse trecho isere o conteudo de head.html na mesma linha em que for digitado no template
+```html
+{% include 'global/partials/head.html' %}
+```
+
+em: base/global/base.html
+```html
+{% include 'global/partials/head.html' %}
+
+<h1>{% block texto %}{% endblock texto %}</h1>
+
+</body>
+</html>
+```
