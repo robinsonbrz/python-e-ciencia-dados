@@ -111,3 +111,43 @@ em: base/global/base.html
 </body>
 </html>
 ```
+
+### Static files
+Podemos criar pastas chamadas `static` dentro de cada app que por padrao o Django reconhece
+
+Adicionando outros diretorios em uma lista STATICFILES_DIRS
+settings.py
+```python
+STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    BASE_DIR / 'base' / 'static'
+]
+```
+
+Criando uma pasta static global
+
+base/static/global/css/red.css
+```css
+body {
+  background: red;
+}
+```
+
+
+Criando uma pasta static na propria app, padrao Django
+
+home/static/home/css/blue.css
+```css
+body {
+  background: blue;
+}
+```
+
+No template apontar para pastas estaticas
+```python
+{% load static %}
+<link rel="stylesheet" href="{% static 'home/css/blue.css' %}">
+<link rel="stylesheet" href="{% static 'global/css/red.css' %}">
+```
+
+
