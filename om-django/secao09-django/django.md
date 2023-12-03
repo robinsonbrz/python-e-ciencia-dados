@@ -149,5 +149,33 @@ No template apontar para pastas estaticas
 <link rel="stylesheet" href="{% static 'home/css/blue.css' %}">
 <link rel="stylesheet" href="{% static 'global/css/red.css' %}">
 ```
+### Enviando variaveis para o contexto {{ variavel }}
 
 
+
+```python
+
+def exemplo(request):
+    print('exemplo')
+
+    context = {
+        'text': 'Olá exemplo',
+        'title': 'Essa é uma página de exemplo - ',
+    }
+
+    return render(
+        request,
+        'blog/exemplo.html',
+        context
+    )
+
+```
+
+
+
+Recebendo no template
+```html
+    <title>{{ title }}</title>
+    <h1>{{ text }}</h1>
+
+```
