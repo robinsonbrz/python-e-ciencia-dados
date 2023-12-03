@@ -1,10 +1,10 @@
+from unicodedata import category
+
 from django.shortcuts import get_object_or_404
-from rest_framework import status
 from rest_framework.decorators import api_view
-from rest_framework.generics import ListCreateAPIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
 from tag.models import Tag
 
 from ..models import Recipe
@@ -15,52 +15,36 @@ class RecipeAPIv2Pagination(PageNumberPagination):
     page_size = 2
 
 
-class RecipeAPIv2List(ListCreateAPIView):
+class RecipeAPIv2ViewSet(ModelViewSet):
     queryset = Recipe.objects.get_published()
     serializer_class = RecipeSerializer
     pagination_class = RecipeAPIv2Pagination
 
-    # def get(self, request):
-    #     recipes = Recipe.objects.get_published()[:10]
-    #     serializer = RecipeSerializer(
-    #         instance=recipes,
-    #         many=True,
-    #         context={'request': request},
-    #     )
-    #     return Response(serializer.data)
+    def get_serializer_class(self):
+        return super().get_serializer_class()
 
-    # def post(self, request):
-    #     serializer = RecipeSerializer(
-    #         data=request.data,
-    #         context={'request': request},
-    #     )
-    #     serializer.is_valid(raise_exception=True)
-    #     serializer.save()
-    #     return Response(
-    #         serializer.data,
-    #         status=status.HTTP_201_CREATED
-    #     )
+    def get_serializer(self, *args, **kwargs):
+        return super().get_serializer(*args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["example"] = 'this is in context now'
+        return context
 
-class RecipeAPIv2Detail(APIView):
-    def get_recipe(self, pk):
-        recipe = get_object_or_404(
-            Recipe.objects.get_published(),
-            pk=pk
-        )
-        return recipe
+    def get_queryset(self):
+        qs = super().get_queryset()
 
-    def get(self, request, pk):
-        recipe = self.get_recipe(pk)
-        serializer = RecipeSerializer(
-            instance=recipe,
-            many=False,
-            context={'request': request},
-        )
-        return Response(serializer.data)
+        category_id = self.request.query_params.get('category_id', '')
 
-    def patch(self, request, pk):
-        recipe = self.get_recipe(pk)
+        if category_id != '' and category_id.isnumeric():
+            qs = qs.filter(category_id=category_id)
+
+        return qs
+
+    def partial_update(self, request, *args, **kwargs):
+        pk = kwargs.get('pk')
+
+        recipe = self.get_queryset().filter(pk=pk).first()
         serializer = RecipeSerializer(
             instance=recipe,
             data=request.data,
@@ -73,11 +57,6 @@ class RecipeAPIv2Detail(APIView):
         return Response(
             serializer.data,
         )
-
-    def delete(self, request, pk):
-        recipe = self.get_recipe(pk)
-        recipe.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view()
