@@ -222,4 +222,68 @@ urlpatterns = [
 ]
 
 ```
+### Include block de posts
+
+
+aula207_ola_django/base/global/base.html
+
+```html
+
+<h1>{% block texto %}{% endblock texto %}</h1>
+
+<main class="posts">
+  {% include 'global/partials/postblock.html' %}
+</main>
+
+</body>
+</html>
+
+```
+
+aula207_ola_django/base/global/partials/postblock.html
+
+```html
+<article class="post">
+  <header>
+    <h2 class="post__title">Lorem ipsum dolor sit amet.</h2>
+  </header>
+  <div class="post__body">
+    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam doloremque
+    praesentium nam mollitia, recusandae asperiores in corporis ut eius
+    architecto rerum quae adipisci. Animi, repudiandae aut alias neque ab nemo
+    quasi perspiciatis natus odio ad aliquid eos. Illum incidunt perspiciatis
+    autem dolorum maxime, repellat facere, quae assumenda adipisci iure
+    officiis.
+  </div>
+</article>
+```
+aula207_ola_django/base/static/global/css/style.css
+
+```css
+/* Reset */
+*,
+*:after,
+*:before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+  background: #f1f1f1;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+```
+
+
+jsonplaceholder
+emula uma api
+
 
