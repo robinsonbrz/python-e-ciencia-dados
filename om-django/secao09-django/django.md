@@ -179,3 +179,47 @@ Recebendo no template
     <h1>{{ text }}</h1>
 
 ```
+
+### Reverse name urls
+
+
+
+base/global/base.html
+```
+{% include 'global/partials/menu.html' %}
+```
+
+base/global/partials/menu.html
+```html
+<nav>
+  <ul>
+    <li>
+      <a href="{% url 'home:home' %}">Home</a>
+    </li>
+    <li>
+      <a href="{% url 'blog:home' %}">Blog</a>
+    </li>
+    <li>
+      <a href="{% url 'blog:exemplo' %}">Exemplo</a>
+    </li>
+  </ul>
+</nav>
+```
+
+blog/urls.py
+```python
+from blog import views
+from django.urls import path
+
+app_name = 'blog'
+
+# blog/
+urlpatterns = [
+    path('', views.blog),
+    path('exemplo/', views.exemplo),
+    path('', views.blog, name='home'),
+    path('exemplo/', views.exemplo, name='exemplo'),
+]
+
+```
+
