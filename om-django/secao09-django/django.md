@@ -26,7 +26,11 @@ TEMPLATES = [
 ```
 
 Conforme configurado acima temos uma pasta 'base' de templates
+
+
 Neste  arquivo base ja preparamos um block para receber texto
+Abaixo configuro o template pai com um bloco **texto** com um valor padrao
+Esse valor padrao sera sobrescrito caso o template filho (que extends coloque um 'block' com o mesmo nome)
 base/global/base.html
 ```html
 <!DOCTYPE html>
@@ -38,15 +42,20 @@ base/global/base.html
     <title>Document</title>
   </head>
   <body>
-    <h1>{% block texto %} BASE {% endblock texto %}</h1>
+    <h1>{% block texto %} Valor padrao caso o filho nao insira nada {% endblock texto %}</h1>
   </body>
 </html>
 ```
 
+Isso e um template tag Django 
+```python
+{% block texto %} {% endblock texto %}
+```
 
 
-Este e o index.html que extend base html
-E injeta um bloco texto
+
+Este e o index.html que extends base html
+E injeta um bloco texto, substituindo o valor padrao do template pai
 home/templates/home/index.html
 ```python
 {% extends 'global/base.html' %}
@@ -54,7 +63,7 @@ home/templates/home/index.html
 {% block texto %} MUDAR O TEXTO {% endblock texto %}
 ```
 
-A view chama render template
+A view chama render template index.html que extends base.html
 home/views.py
 ```python
 from django.shortcuts import render
