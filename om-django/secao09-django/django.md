@@ -225,7 +225,7 @@ urlpatterns = [
 ### Include block de posts
 
 
-aula207_ola_django/base/global/base.html
+base/global/base.html
 
 ```html
 
@@ -240,7 +240,7 @@ aula207_ola_django/base/global/base.html
 
 ```
 
-aula207_ola_django/base/global/partials/postblock.html
+base/global/partials/postblock.html
 
 ```html
 <article class="post">
@@ -257,7 +257,7 @@ aula207_ola_django/base/global/partials/postblock.html
   </div>
 </article>
 ```
-aula207_ola_django/base/static/global/css/style.css
+base/static/global/css/style.css
 
 ```css
 /* Reset */
@@ -283,7 +283,95 @@ body {
 ```
 
 
+
+### Carregando dados de um json com loop for no template
+
 jsonplaceholder
-emula uma api
+moca uma api
+
+
+blog/views.py
+```python
+from blog.data import posts
+from django.shortcuts import render
+
+
+def blog(request):
+    print('blog')
+
+    context = {
+        'text': 'Olá blog',
+        'posts': posts
+    }
+
+    return render(
+        request,
+        'blog/index.html',
+        context
+    )
+```
+
+
+blog/data.py
+```python
+posts = [
+    {
+        "userId": 1,
+        "id": 1,
+        "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+        "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+    },
+    {
+        "userId": 1,
+        "id": 2,
+        "title": "qui est esse",
+        "body": "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla"
+    },
+    {
+        "userId": 1,
+        "id": 3,
+        "title": "ea molestias quasi exercitationem repellat qui ipsa sit aut",
+        "body": "et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut"
+    },
+    {
+        "userId": 1,
+        "id": 4,
+        "title": "eum et est occaecati",
+        "body": "ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit"
+    },
+    {
+        "userId": 1,
+        "id": 5,
+        "title": "nesciunt quas odio",
+        "body": "repudiandae veniam quaerat sunt sed\nalias aut fugiat sit autem sed est\nvoluptatem omnis possimus esse voluptatibus quis\nest aut tenetur dolor neque"
+        }
+]
+```
+
+blog/templates/blog/index.html
+```python
+{% extends 'global/base.html' %}
+
+{% block texto %} {{ text }} {% endblock texto %}
+
+{% block posts %}
+  {% for post in posts %}
+    {% include 'global/partials/postblock.html' %}
+  {% endfor %}
+{% endblock posts %}
+```
+
+
+base/global/partials/postblock.html
+```html
+<article class="post">
+  <header>
+    <h2 class="post__title">{{ post.title }}</h2>
+  </header>
+  <div class="post__body">{{ post.body }}</div>
+</article>
+
+```
+
 
 
