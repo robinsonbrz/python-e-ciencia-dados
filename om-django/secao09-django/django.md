@@ -418,3 +418,63 @@ base/global/partials/postblock.html
 ```html
       <a href="{% url 'blog:post' post.id %}">
 ```
+
+# Post Detalhe
+
+
+blog/views.py
+```python
+from typing import Any
+
+from blog.data import posts
+from django.http import HttpRequest
+from django.shortcuts import render
+
+
+def post(request: HttpRequest, post_id: int):
+    found_post: dict[str, Any] | None = None
+
+    for post in posts:
+        if post['id'] == post_id:
+            found_post = post
+            break
+
+    if found_post is None:
+        raise Exception('Post não existe.')
+
+    context = {
+        # 'text': 'Olá blog',
+        'post': found_post,
+        'title': found_post['title'] + ' - ',
+    }
+
+    return render(
+        request,
+        'blog/post.html',
+        context
+    )
+
+```
+
+Novo template
+blog/templates/blog/post.html
+
+```html
+{% extends 'global/base.html' %}
+
+{% block texto %} {{ text }} {% endblock texto %}
+
+{% block posts %}
+  <article class="post single-post">
+    <header>
+      <h1 class="post__title">
+        <a href="{% url 'blog:post' post.id %}">
+          {{ post.title }}
+        </a>
+      </h1>
+    </header>
+    <div class="post__body">{{ post.body }}</div>
+  </article>
+{% endblock posts %}
+```
+

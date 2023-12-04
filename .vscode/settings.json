@@ -87,6 +87,6 @@
     },
     "diffEditor.ignoreTrimWhitespace": false,
     "gitlens.views.branches.avatars": false,
-    "workbench.sideBar.location": "right",
+    "workbench.sideBar.location": "left",
     "git.ignoreMissingGitWarning": true,
 }
