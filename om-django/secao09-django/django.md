@@ -478,3 +478,22 @@ blog/templates/blog/post.html
 {% endblock posts %}
 ```
 
+### Erro 404
+
+Dispara uma exceção 404
+
+```python
+from django.http import Http404, HttpRequest
+
+def post(request: HttpRequest, post_id: int):
+    found_post: dict[str, Any] | None = None
+
+    for post in posts:
+        if post['id'] == post_id:
+            found_post = post
+            break
+
+    if found_post is None:
+        raise Http404('Post não existe.')
+
+```
