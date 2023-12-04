@@ -497,3 +497,18 @@ def post(request: HttpRequest, post_id: int):
         raise Http404('Post não existe.')
 
 ```
+
+### STATIC_ROOT E collectstatic
+
+Em settings STATIC_ROOT é a pasta que vai receber os estáticos de todo o projeto
+
+STATIC_ROOT = BASE_DIR / "static_files"
+
+Ela será utilizada pelo servidor quando DEBUG = False
+
+Ela deve estar no .gitignore
+
+É possível utilizar o white noise, para servir arquivos estáticos com DEBUG = False
+(lembrar de coletar os estáticos)
+
+
