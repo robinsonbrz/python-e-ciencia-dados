@@ -372,6 +372,12 @@ base/global/partials/postblock.html
 </article>
 
 ```
+### if template
 
+```python
+{% if text %}
+  <h1>{% block texto %}{% endblock texto %}</h1>
+{% endif %}
+```
 
 
