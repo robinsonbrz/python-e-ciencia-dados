@@ -380,4 +380,41 @@ base/global/partials/postblock.html
 {% endif %}
 ```
 
+### URL com id
 
+blog/views.py
+
+```python
+def post(request, id):
+    print('post', id)
+
+    context = {
+        # 'text': 'Olá blog',
+        'posts': posts
+    }
+
+    return render(
+        request,
+        'blog/index.html',
+        context
+    )
+```
+
+blog/urls.py
+```python
+app_name = 'blog'
+
+# blog/
+# Django URLs:
+# https://docs.djangoproject.com/en/4.2/topics/http/urls/
+urlpatterns = [
+    path('', views.blog, name='home'),
+    path('post/<int:id>', views.post, name='post'),
+    path('exemplo/', views.exemplo, name='exemplo'),
+]
+```
+
+base/global/partials/postblock.html
+```html
+      <a href="{% url 'blog:post' post.id %}">
+```
