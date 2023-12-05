@@ -3,7 +3,7 @@ Organizar os templates na pasta nome-app/template/nome-app
 Dentro do template 
 
 
-Configurando uma pasta onde ser'ao inseridos arquivos base
+Configurando uma pasta onde serão inseridos arquivos base
 
 ```ptyhon
 TEMPLATES = [
@@ -28,9 +28,9 @@ TEMPLATES = [
 Conforme configurado acima temos uma pasta 'base' de templates
 
 
-Neste  arquivo base ja preparamos um block para receber texto
-Abaixo configuro o template pai com um bloco **texto** com um valor padrao
-Esse valor padrao sera sobrescrito caso o template filho (que extends coloque um 'block' com o mesmo nome)
+Neste arquivo base já preparamos um block para receber texto
+Abaixo configuro o template pai com um bloco **texto** com um valor padrão
+Esse valor padrão sera sobrescrito caso o template filho (que extends coloque um 'block' com o mesmo nome)
 base/global/base.html
 ```html
 <!DOCTYPE html>
@@ -47,15 +47,15 @@ base/global/base.html
 </html>
 ```
 
-Isso e um template tag Django 
+Isso é um template tag Django 
 ```python
 {% block texto %} {% endblock texto %}
 ```
 
 
 
-Este e o index.html que extends base html
-E injeta um bloco texto, substituindo o valor padrao do template pai
+Este é o index.html que extends base html
+E injeta um bloco texto, substituindo o valor padrão do template pai
 home/templates/home/index.html
 ```python
 {% extends 'global/base.html' %}
@@ -80,8 +80,8 @@ def home(request):
 
 ### Uso do Include
 
-Podemos tambem criar trechos html para ser incluidos em outros templates
-Muito util para organizar head, footer, e divs que podem ser reutilizadas
+Podemos também criar trechos html para ser incluídos em outros templates
+Muito útil para organizar head, footer, e divs que podem ser reutilizadas
 
 Primeiro criar o arquivo html a ser inserido
 em: base/global/partials/head.html
