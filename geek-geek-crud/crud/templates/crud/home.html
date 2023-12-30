@@ -9,9 +9,14 @@
     <h1>Crud</h1>
     {% for livro in livros%}
     <p>
-        {{ livro.id }} {{ livro.title }} <a href="{% url 'books:delete_book_view' livro.id %}">
+        {{ livro.id }} {{ livro.title }} 
+        <a href="{% url 'books:update_book_view' livro.id %}">
+            <button>Update</button> 
+        </a>
+        
+        <a href="{% url 'books:delete_book_view' livro.id %}">
             <button>Delete</button> 
-         </a>
+        </a>
     </p>
     {% endfor%}
 </body>
