@@ -6,6 +6,13 @@
     <title>Crud Django</title>
 </head>
 <body>
-    <h1>Crud inicial</h1>
+    <h1>Crud</h1>
+    {% for livro in livros%}
+    <p>
+        {{ livro.id }} {{ livro.title }} <a href="{% url 'books:delete_book_view' livro.id %}">
+            <button>Delete</button> 
+         </a>
+    </p>
+    {% endfor%}
 </body>
 </html>
